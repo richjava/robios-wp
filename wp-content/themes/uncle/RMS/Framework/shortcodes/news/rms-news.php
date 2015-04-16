@@ -67,6 +67,7 @@ function news($atts)
                                 $team_return .='<div class="vc_col-sm-4 wpb_column vc_column_container ">
 		<div class="wpb_wrapper">
 			<h4 style="margin: ; width: 100%; color: ; font-size: ;">'.get_the_title().'</h4><p>'.substr(get_the_content(), 0, 150).'</p>
+                            <a href="#" class="arrow-link" style="width: 100%; float: left; border: ; padding: ; margin: ; background:; color: ">Read More  </a>
 		</div> 
 	</div>';
 //			   $team_return .='
