@@ -10,14 +10,14 @@
 get_header(); ?>
 
 <div id="main-content" class="main-content">
-    
+
 	<section class="page-header" id="page-header">
     
 	<!-- Blog title text -->
 		<div class="row">
 			<div class="ten columns center">
 				<?php
-					$singlesidePos = get_option('singlePostPageTemplate', FALSE);
+					$singlesidePos = get_option('singlePostPageTemplate', 'noSidebar');
 				?>
 				<?php while ( have_posts() ) : the_post(); ?>
 				<h5 class="bigtext uppercase letterspace bold text-subtitle"><?php echo do_shortcode(get_the_title()); ?></h5>
@@ -64,6 +64,7 @@ get_header(); ?>
 			<!-- Begin Posts -->
 			<div class="eight columns">
 				<div class="post">
+                                   
 					<?php if(function_exists('RMSPostViews')): RMSPostViews(get_the_ID()); endif;?>  
 					
 					<?php
@@ -102,6 +103,7 @@ get_header(); ?>
 			<!-- Begin Posts -->
 			<div class="eight columns">
 				<div class="post">
+                                        
 					<?php if(function_exists('RMSPostViews')): RMSPostViews(get_the_ID()); endif;?>  
 					
 					<?php
@@ -121,6 +123,10 @@ get_header(); ?>
         </div>
 	</section>
 	<?php endif; ?>
+    <ul class="navigationarrows"> 
+<li class="previous"><?php previous_post_link(' Previous post:<br /> &laquo; %link'); ?> <?php if(!get_adjacent_post(false, '', true)) { echo '<span>&laquo;Previous</span>'; } // if there are no older articles ?></li>
+<li class="next"><?php next_post_link('Next post: <br /> %link &raquo;'); ?> <?php if(!get_adjacent_post(false, '', false)) { echo '<span>Next post:</span>'; } // if there are no newer articles ?> </li> 
+</ul> 
 	<section id="page-comments" class="page-comments">
 	<?php
 		// Start the Loop.

@@ -115,9 +115,9 @@ function news_post_meta_boxes_setup() {
 
     /* Save post meta on the 'save_post' hook. */
     add_action('save_post', 'news_save_post_class_meta', 10, 2);
-    
+
     /* Save post meta on the 'save_post' hook. */
-    add_action( 'publish_post', 'post_published_notification', 10, 2 );
+    add_action('publish_post', 'post_published_notification', 10, 2);
 }
 
 /* Create one or more meta boxes to be displayed on the post editor screen. */
@@ -158,21 +158,20 @@ function news_post_class_meta_box($object, $box) {
         $checked = ( $notification_sent == "pending" ) ? 'checked' : '';
         ?>
         <p>
-            <input type="checkbox" name="send_notification" value="pending" value="pending" <?php echo $checked;?>/> Also send this post as a notification to mobile devices
+            <input type="checkbox" name="send_notification" value="pending" value="pending" <?php echo $checked; ?>/> Also send this post as a notification to mobile devices
         </p> 
-    <?php
+        <?php
     }
 }
 
-
-function post_published_notification( $ID, $post ) {
-    if(set_send_notification($post_id)){
- $meta_key = 'send_notification';
-    update_post_meta( $post_id, $meta_key, 'sent', true );
+function post_published_notification($ID, $post) {
+    if (set_send_notification($post_id)) {
+        $meta_key = 'send_notification';
+        update_post_meta($post_id, $meta_key, 'sent', true);
         echo "Notification sent.";
     }
-  
-  
+
+
 //    $author = $post->post_author; /* Post author ID. */
 //    $name = get_the_author_meta( 'display_name', $author );
 //    $email = get_the_author_meta( 'user_email', $author );
@@ -189,26 +188,26 @@ function post_published_notification( $ID, $post ) {
 
 /* Save the meta box's post metadata. */
 
-function set_send_notification($post_id){
+function set_send_notification($post_id) {
     $meta_key = 'send_notification';
-$new_meta_value = ( isset( $_POST[$meta_key] ) ? sanitize_html_class( $_POST[$meta_key] ) : 'false' );
-    
+    $new_meta_value = ( isset($_POST[$meta_key]) ? sanitize_html_class($_POST[$meta_key]) : 'false' );
+
 
     /* Get the meta value of the custom field key. */
     //$meta_value = get_post_meta($post_id, $meta_key, true);
-    
+
     /* If a new meta value was added and there was no previous value, add it. */
-  if ( $new_meta_value)
-    update_post_meta( $post_id, $meta_key, $new_meta_value, true );
-return $new_meta_value == 'pending';
+    if ($new_meta_value)
+        update_post_meta($post_id, $meta_key, $new_meta_value, true);
+    return $new_meta_value == 'pending';
 }
 
 function news_save_post_class_meta($post_id, $post) {
     set_send_notification($post_id);
-    
-    
-    
-    
+
+
+
+
     /* Verify the nonce before proceeding. */
     if (!isset($_POST['news_post_class_nonce']) || !wp_verify_nonce($_POST['news_post_class_nonce'], basename(__FILE__)))
         return $post_id;
